@@ -1,176 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>Swiper demo</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+---
+layout: default
+---
 
-	<!-- Link Swiper's CSS -->
-	<link rel="stylesheet" href="../dist/css/swiper.min.css">
+<!-- Wrapper -->
+<div id="wrapper">
 
-	<!-- Demo styles -->
-	<style>
-		html, body {
-			position: relative;
-			height: 100%;
-		}
-		body {
-			background: #eee;
-			font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-			font-size: 14px;
-			color: #000;
-			margin: 0;
-			padding: 0;
-		}
-		.swiper-container {
-			width: 100%;
-			height: 100%;
-		}
-		.swiper-slide {
-			text-align: center;
-			font-size: 18px;
-			background: #fff;
-			/* Center slide text vertically */
-			display: -webkit-box;
-			display: -ms-flexbox;
-			display: -webkit-flex;
-			display: flex;
-			-webkit-box-pack: center;
-			-ms-flex-pack: center;
-			-webkit-justify-content: center;
-			justify-content: center;
-			-webkit-box-align: center;
-			-ms-flex-align: center;
-			-webkit-align-items: center;
-			align-items: center;
-		}
-		.menu {
-			min-width: 100px;
-			width: 70%;
-			max-width: 320px;
-			background-color: #2C8DFB;
-			color: #fff;
-		}
-		.content {
-			width: 100%;
-		}
-		.menu-button {
-			position: absolute;
-			top: 0px; left: 0px;
-			padding: 15px;
-			cursor: pointer;
-			-webkit-transition: .3s;
-			transition: .3s;
-			background-color: #2C8DFB;
-			/*margin: 14px;
-			border-radius: 5px;*/
-		}
-		.menu-button .bar:nth-of-type(1) {
-			margin-top: 0px;
-		}
-		.menu-button .bar:nth-of-type(3) {
-			margin-bottom: 0px;
-		}
-		.bar {
-			position: relative;
-			display: block;
-			width: 50px;
-			height: 5px;
-			margin: 10px auto;
-			background-color: #fff;
-			border-radius: 10px;
-			-webkit-transition: .3s;
-			transition: .3s;
-		}
-		.menu-button:hover .bar:nth-of-type(1) {
-			-webkit-transform: translateY(1.5px) rotate(-4.5deg);
-			-ms-transform: translateY(1.5px) rotate(-4.5deg);
-			transform: translateY(1.5px) rotate(-4.5deg);
-		}
-		.menu-button:hover .bar:nth-of-type(2) {
-			opacity: .9;
-		}
-		.menu-button:hover .bar:nth-of-type(3) {
-			-webkit-transform: translateY(-1.5px) rotate(4.5deg);
-			-ms-transform: translateY(-1.5px) rotate(4.5deg);
-			transform: translateY(-1.5px) rotate(4.5deg);
-		}
-		.cross .bar:nth-of-type(1) {
-			-webkit-transform: translateY(15px) rotate(-45deg);
-			-ms-transform: translateY(15px) rotate(-45deg);
-			transform: translateY(15px) rotate(-45deg);
-		}
-		.cross .bar:nth-of-type(2) {
-			opacity: 0;
-		}
-		.cross .bar:nth-of-type(3) {
-			-webkit-transform: translateY(-15px) rotate(45deg);
-			-ms-transform: translateY(-15px) rotate(45deg);
-			transform: translateY(-15px) rotate(45deg);
-		}
-		.cross:hover .bar:nth-of-type(1) {
-			-webkit-transform: translateY(13.5px) rotate(-40.5deg);
-			-ms-transform: translateY(13.5px) rotate(-40.5deg);
-			transform: translateY(13.5px) rotate(-40.5deg);
-		}
-		.cross:hover .bar:nth-of-type(2) {
-			opacity: .1;
-		}
-		.cross:hover .bar:nth-of-type(3) {
-			-webkit-transform: translateY(-13.5px) rotate(40.5deg);
-			-ms-transform: translateY(-13.5px) rotate(40.5deg);
-			transform: translateY(-13.5px) rotate(40.5deg);
-		}
-	</style>
-</head>
-<body>
-	<!-- Swiper -->
-	<div class="swiper-container">
-		<div class="swiper-wrapper">
-			<div class="swiper-slide menu">Menu slide</div>
-			<div class="swiper-slide content">
-				<div class="menu-button">
-					<div class="bar"></div>
-					<div class="bar"></div>
-					<div class="bar"></div>
-				</div>
-				Content slide
-			</div>
-		</div>
-	</div>
+    <!-- Header -->
+    <header id="header">
+        <h1><a href="index.html"><strong>{{ site.header.title }}</strong> {{ site.header.subtitle }}</a></h1>
+        <nav>
+            <ul>
+                <li><a href="#footer" class="icon fa-info-circle">About</a></li>
+            </ul>
+        </nav>
+    </header>
 
-	<!-- Swiper JS -->
-	<script src="../dist/js/swiper.min.js"></script>
+    <!-- Main -->
+    <div id="main">
+        {% for image in site.static_files %}
+        {% if image.path contains 'fulls' %}
+        <article class="thumb">
+            <a href="{{ site.baseurl }}{{ site.image_fulls_loc }}/{{ image.name }}" class="image">
+                <img src="{{ site.baseurl }}{{ site.image_thumbs_loc }}/{{ image.name }}" alt=""
+                     data-name="{{ image.name }}"/></a>
+            <!--<h2></h2>
+            <p></p>-->
+        </article>
+        {% endif %}
+        {% endfor %}
+    </div>
 
-	<!-- Initialize Swiper -->
-	<script>
-    var menuButton = document.querySelector('.menu-button');
-    var swiper = new Swiper('.swiper-container', {
-      slidesPerView: 'auto',
-      initialSlide: 1,
-      resistanceRatio: 0,
-      slideToClickedSlide: true,
-      on: {
-        init: function () {
-          var slider = this;
-          menuButton.addEventListener('click', function () {
-            if (slider.activeIndex === 0) {
-              slider.slideNext();
-            } else {
-              slider.slidePrev();
-            }
-          }, true);
-        },
-        slideChange: function () {
-          var slider = this;
-          if (slider.activeIndex === 0) {
-            menuButton.classList.add('cross');
-          } else {
-            menuButton.classList.remove('cross');
-          }
-        },
-      }
-    });
-	</script>
-</body>
-</html>
+    <!-- Footer -->
+    <footer id="footer" class="panel">
+        <div class="inner split">
+            <div>
+                <section>
+                    <h2>{{ site.footer.name }}</h2>
+                    <p>{{ site.footer.bio }}</p>
+                    <p>{{ site.footer.github }}</p>
+                </section>
+                <section>
+                    <h2>Sponsor</h2>
+                    <div class="ad">
+                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <ins class="adsbygoogle"
+                             style="display:block; text-align:center;"
+                             data-ad-layout="in-article"
+                             data-ad-format="fluid"
+                             data-ad-client="ca-pub-1702577941194110"
+                             data-ad-slot="9823584598"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </section>
+                <section>
+                    <h2>Follow me on ...</h2>
+                    <ul class="icons">
+                        <li><a href="{{ site.social_urls.facebook }}" class="icon fa-facebook"><span
+                                class="label">Facebook</span></a>
+                        </li>
+                        <li><a href="{{ site.social_urls.twitter }}" class="icon fa-twitter"><span
+                                class="label">Twitter</span></a>
+                        </li>
+                        <li><a href="{{ site.social_urls.instagram }}" class="icon fa-instagram"><span
+                                class="label">Instagram</span></a>
+                        </li>
+                        <li><a href="{{ site.social_urls.dribbble }}" class="icon fa-dribbble"><span
+                                class="label">Dribbble</span></a>
+                        </li>
+                        <li><a href="{{ site.social_urls.github }}" class="icon fa-github"><span
+                                class="label">GitHub</span></a>
+                        </li>
+                        <li><a href="{{ site.social_urls.linkedin }}" class="icon fa-linkedin"><span
+                                class="label">LinkedIn</span></a>
+                        </li>
+                    </ul>
+                </section>
+                <p class="copyright">
+                    &copy; {{ site.author }}. Design: {{ site.web_design }}
+                </p>
+            </div>
+            <div>
+                <section>
+                    <h2>Get in touch</h2>
+                    <form method="post" action="#">
+                        <div class="field half first">
+                            <input type="text" name="name" id="name" placeholder="Name"/>
+                        </div>
+                        <div class="field half">
+                            <input type="text" name="email" id="email" placeholder="Email"/>
+                        </div>
+                        <div class="field">
+                            <textarea name="message" id="message" rows="4" placeholder="Message"></textarea>
+                        </div>
+                        <ul class="actions">
+                            <li><input type="submit" value="Send" class="special"/></li>
+                            <li><input type="reset" value="Reset"/></li>
+                        </ul>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </footer>
+</div>
